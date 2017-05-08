@@ -1,0 +1,40 @@
+never S_CashierCorrectOrder {    /* !([] ((((! ((currentCust==1))) || ((currentOrder==favorite_foods[1]))) && ((! ((currentCust==2))) || ((currentOrder==favorite_foods[2])))) && ((! ((currentCust==3))) || ((currentOrder==favorite_foods[3]))))) */
+T0_init:
+	if
+	:: (! (((((! ((currentCust==1))) || ((currentOrder==favorite_foods[1]))) && ((! ((currentCust==2))) || ((currentOrder==favorite_foods[2])))) && ((! ((currentCust==3))) || ((currentOrder==favorite_foods[3])))))) -> goto accept_all
+	:: (1) -> goto T0_init
+	fi;
+accept_all:
+	skip
+}
+never S_NeverSameOrder {    /* !([] ((! (((cust[0]!=255)) && ((cust[1]!=255)))) || ((cust[0]!=cust[1])))) */
+T0_init:
+	if
+	:: (! (((! (((cust[0]!=255)) && ((cust[1]!=255)))) || ((cust[0]!=cust[1]))))) -> goto accept_all
+	:: (1) -> goto T0_init
+	fi;
+accept_all:
+	skip
+}
+never L_EventuallyOrder {    /* !([] ((! ((numCustWait==3))) || (<> ((numCustWait<3))))) */
+T0_init:
+	if
+	:: (! ((! ((numCustWait==3)))) && ! (((numCustWait<3)))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	fi;
+accept_S4:
+	if
+	:: (! (((numCustWait<3)))) -> goto accept_S4
+	fi;
+}
+never L_EventuallyServerBusy {    /* !([] (<> (((cust[0]!=255)) && ((cust[1]!=255))))) */
+T0_init:
+	if
+	:: (! ((((cust[0]!=255)) && ((cust[1]!=255))))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	fi;
+accept_S4:
+	if
+	:: (! ((((cust[0]!=255)) && ((cust[1]!=255))))) -> goto accept_S4
+	fi;
+}

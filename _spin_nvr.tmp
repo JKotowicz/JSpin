@@ -1,0 +1,22 @@
+never L_Live {    /* !([] ((! ((napping[0]) && (napping[1]))) || (<> ((! (napping[0])) || (! (napping[1])))))) */
+T0_init:
+	if
+	:: (! ((! ((napping[0]) && (napping[1])))) && ! (((! (napping[0])) || (! (napping[1]))))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	fi;
+accept_S4:
+	if
+	:: (! (((! (napping[0])) || (! (napping[1]))))) -> goto accept_S4
+	fi;
+}
+never L_Fair {    /* !([] ((! (waiting[0])) || (<> (! (waiting[0]))))) */
+T0_init:
+	if
+	:: (! ((! (waiting[0])))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	fi;
+accept_S4:
+	if
+	:: (! ((! (waiting[0])))) -> goto accept_S4
+	fi;
+}
